@@ -1,0 +1,8 @@
+= Explanation =
+This is a example of how to develop a simple plugin engine to be able to load plugins on execution time. 
+
+= Compile =
+You have to compile in order:
+* Engine
+* PluginA
+* ExampleApp

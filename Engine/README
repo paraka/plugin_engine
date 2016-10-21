@@ -1,0 +1,2 @@
+Use compile.sh instead of cmake because of dl linker stuff. Symbols does not seem to be correctly loaded
+even compilation command and flags seems to be the same.

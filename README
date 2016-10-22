@@ -1,9 +1,82 @@
-= Explanation =
+= How it works =
 This is a example of how to develop a simple plugin engine to be able to load plugins on execution time. 
 
+The plugins will use the engine in order to be created. The engine will be compiled in form of library
+
+It makes use of some interesting c++11 stuff like smart pointers and makes intensive use of c++ pimpl idiom.
+
+You can create new families of plugins in the core engine libray. In this example it only exists one dummy stuff to show how to use it. 
+
+= How to add a plugin family =
+You have to define and implement a server plugin to expose the plugin interface that the real plugins of the family 
+must implement in order to be loaded correctly.
+
+An example of this is is PluginAServer class.
+
+In order to make tha family public you need to provide an access to that family class in Core.h file. The way to do this
+is to add al get method which returns a reference to the class. For example:
+
+ ENGINE_API PluginAServer &getPluginAServer();
+
+This Core class will store the new family in a internal map and do the correct registration of the family plugins in the engine.
+
+In SharedLibrary.h file mecanisms for load stuff for the plugins are defined. It makes use of C dl library stuff. It provides static methods
+for Load, UnLoad and get correct pointers inside the plugins. These are two symbols:
+
+* getEngineVersion
+* registerPlugin
+
+When you implement a plugin for the family you provide this two symbols in order the engine be able to find them. The way of doing this is
+two provide an implementation of these two:
+
+ extern "C" PLUGIN_A_API int getEngineVersion()
+ extern "C" PLUGIN_A_API void registerPlugin(Core &core)
+
+This is used in Plugin class which is able to register plugins and define versions of the engine. The most important stuff in Plugin class are
+these two which usins sharedLibrary static methods will looks for symbols defined in the plugins with:
+
+  ENGINE_API int getEngineVersion() const;
+  ENGINE_API void registerPlugin(Core &core);
+
+For more details please take a look of the full code.
+
 = Compile =
-- You need gcc with c++11 support.
-- You have to compile in order:
+You need gcc with c++11 support.
+
+You have to compile in order:
  * Engine
  * PluginA
  * ExampleApp
+
+== Engine ==
+$ cd Engine
+$ ./compile.sh 
+
+Now libEngine.so has been created.
+
+== PluginA ==
+$ cd PluginA
+$ mkdir build
+$ cd build && cmake ..
+$ make
+
+Now libPluginA.so has been created.
+
+== ExampleApp ==
+This example use core plugin library and a plugin to show how to use this stuff.
+
+$ cd ExampleApp
+$ mkdir build
+$ cd build && cmake ..
+$ make
+
+A App binary has been created now.
+
+= Execution =
+Now it is time to test this stuff. Plugins are search in execution time in the same path where executable app has been created, so we have to copy libPluginA.so to App directory. Then we can exec the example:
+
+$ ./App
+Trying to make stufff before load plugins...
+Invalid or unsopported stuff1
+Loading plugins...
+Making stuff1: 5

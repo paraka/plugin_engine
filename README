@@ -14,27 +14,29 @@ must implement in order to be loaded correctly.
 
 An example of this is is PluginAServer class.
 
-In order to make tha family public you need to provide an access to that family class in Core.h file. The way to do this
-is to add al get method which returns a reference to the class. For example:
+In order to make the family public you need to provide an access to that family class in Core.h file. The way to do this
+is to add a "get" method which should return a reference to the class. For example:
 
  ENGINE_API PluginAServer &getPluginAServer();
 
-This Core class will store the new family in a internal map and do the correct registration of the family plugins in the engine.
+This Core class will store the new family in an internal map and will do the correct registration of 
+the family plugins in the engine.
 
 In SharedLibrary.h file mechanisms for doing plugins'stuff are defined. It makes use of C dl library. 
-It provides static methods for Loading, UnLoading and getting correct pointers inside the plugins. These are two symbols:
+It provides static methods for loading, unLoading and getting correct pointers inside the plugins. These are two symbols:
 
 * getEngineVersion
 * registerPlugin
 
-When you implement a plugin for the family you provide this two symbols in order the engine be able to find them. 
-The way of doing this is two provide an implementation of these two:
+When you think in implementing a plugin for the family you must provide this two symbols 
+in order the engine be able to find them. The way of doing this is two provide an implementation of these two:
 
  extern "C" PLUGIN_A_API int getEngineVersion()
  extern "C" PLUGIN_A_API void registerPlugin(Core &core)
 
-This is used in Plugin class which is able to register plugins and define versions of the engine. The most important 
-stuff in Plugin class are these two using the sharedLibrary static methods to look for symbols defined in the plugins with:
+This is used in Plugin class which is able to register plugins and define versions of the engine. 
+The most important stuff in Plugin class are these two using the sharedLibrary static methods
+to look for symbols defined in the plugins with:
 
   ENGINE_API int getEngineVersion() const;
   ENGINE_API void registerPlugin(Core &core);
@@ -53,7 +55,7 @@ You have to compile in order:
 $ cd Engine
 $ ./compile.sh 
 
-Now libEngine.so has been created.
+Now "libEngine.so" has been created.
 
 == PluginA ==
 $ cd PluginA
@@ -61,7 +63,7 @@ $ mkdir build
 $ cd build && cmake ..
 $ make
 
-Now libPluginA.so has been created.
+Now "libPluginA.so" has been created.
 
 == ExampleApp ==
 This example use core plugin library and a plugin to show how to use this stuff.
@@ -71,7 +73,7 @@ $ mkdir build
 $ cd build && cmake ..
 $ make
 
-A App binary has been created now.
+An "App" binary has been created now.
 
 = Execution =
 Now it is time to test this stuff. Plugins are search in execution time in the same path where executable app has been created, so we have to copy libPluginA.so to App directory. Then we can exec the example:

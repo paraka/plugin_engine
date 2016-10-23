@@ -19,7 +19,7 @@ Core::Core() : Impl(new CoreImpl()) { }
 
 Core::~Core() = default;
 
-ENGINE_API PluginAServer &Core::getPluginAServer()
+ENGINE_API PluginAServer &Core::getPluginAServer() const
 {
     return Impl->pluginAServer;
 }

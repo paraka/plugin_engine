@@ -16,7 +16,7 @@ namespace Engine
             Core();
             ~Core();
 
-            ENGINE_API PluginAServer &getPluginAServer();
+            ENGINE_API PluginAServer &getPluginAServer() const;
             // ... Add plugin families here ...
             ENGINE_API void loadPlugin(const std::string &filename);
 

@@ -12,7 +12,7 @@ public:
     PluginAList pluginAlist;
 };
 
-PluginAServer::PluginAServer() : Impl(new PluginAServerImpl()) { }
+PluginAServer::PluginAServer() : Impl(std::make_unique<PluginAServerImpl>()) { }
 PluginAServer::~PluginAServer() = default;
 
 void PluginAServer::addPluginA(PluginAPtr plugin)

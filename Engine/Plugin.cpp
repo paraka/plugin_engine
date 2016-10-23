@@ -38,7 +38,7 @@ public:
     RegisterPluginFunction *registerPluginAddress;
 };
 
-Plugin::Plugin(const std::string &filename) : Impl(new PluginImpl(filename)) { }
+Plugin::Plugin(const std::string &filename) : Impl(std::make_shared<PluginImpl>(filename)) { }
 
 Plugin::~Plugin() = default;
 

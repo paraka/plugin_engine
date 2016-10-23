@@ -15,7 +15,7 @@ public:
 };
 
 
-Core::Core() : Impl(new CoreImpl()) { }
+Core::Core() : Impl(std::make_unique<CoreImpl>()) { }
 
 Core::~Core() = default;
 

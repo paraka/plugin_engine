@@ -44,7 +44,7 @@ to look for symbols defined in the plugins with:
 For more details please take a look of the full code.
 
 = Compile =
-You need gcc with c++11 support.
+You need g++ with c++14 support.
 
 You have to compile in order:
  * Engine
